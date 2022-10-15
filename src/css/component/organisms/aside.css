@@ -1,0 +1,58 @@
+#mainContent > aside {
+  background-color: #9896A4;
+  text-align: center;
+  z-index: 2;
+}
+
+#asideContentWrapper {
+  position: sticky;
+  top: 0px;
+}
+
+#mainContent > aside #asideContentWrapper button {
+  display: block;
+  margin-bottom: 5px;
+  width: 80%;
+  align-self: center;
+  border-radius: 4px;
+
+  /* Tampilan */
+  background-color: #E5E5E5; /* Green */
+  border: 1px solid black;
+  color: black;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#mainContent > aside #asideContentWrapper button:hover {
+  cursor: pointer;
+}
+
+#buttonWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+#asideContentWrapper button.selected, #asideContentWrapper button.selected:hover {
+  background-color: aquamarine !important;
+}
+
+#asideContentWrapper button:hover {
+  background-color: rgb(195, 255, 235) !important;
+}
+
+#asideContentWrapper h2 {
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 800px) {
+  #mainContent > aside {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+}

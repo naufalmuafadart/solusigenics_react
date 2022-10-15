@@ -1,0 +1,13 @@
+#mainContent {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 10fr;
+}
+
+@media only screen and (max-width: 800px) {
+  #mainContent {
+    width: 100%;
+    position: relative;
+    display: block;
+  }
+}

@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+#HnFContainer {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#HnFContainer .card {
+  margin-bottom: 15px;
+}
+
+#HnFContainer .card, #HnFContainer .card .left-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#HnFContainer .card .left-side p {
+  margin-left: 5px;
+  font-size: 1.1em;
+  margin-top: 0px;
+  text-decoration: none;
+  color: black;
+}
+
+#HnFContainer .card img.thumbnail {
+  height: 120px;
+}
+
+#HnFContainer .card img.ic-trash {
+  height: 20px;
+  margin-top: 5px;
+}
+
+#HnFContainer .card img.ic-trash:hover {
+  cursor: pointer;
+}

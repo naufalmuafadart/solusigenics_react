@@ -1,0 +1,68 @@
+body {
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+#content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.box {
+  width: 640px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.box:first-child {
+  margin-bottom: 20px;
+}
+
+.inputContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 80%;
+  border: 0.3px solid black;
+}
+
+.inputContainer:not(:last-child) input {
+  border-radius: 3px;
+}
+
+.inputContainer:last-child input {
+  background-color: #CCFFFF;
+  border: none;
+}
+
+.inputContainer:last-child input:hover {
+  cursor: pointer;
+}
+
+.box:last-child p {
+  margin: 16px 0px;
+}
+
+h1 {
+  font-family: Billabong;
+  font-weight: 600 !important;
+}
+
+.link-login-signup {
+  color: #4CCCCD;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 670px) {
+  .box {
+    width: 90vw;
+  }
+}

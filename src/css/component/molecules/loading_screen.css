@@ -1,0 +1,31 @@
+@keyframes ls-bg-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#loading-screen {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#loading-screen div {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  justify-self: center;
+  align-self: center;
+}
+
+#ls-bg {
+  width: 90px;
+  height: 90px;
+  animation: ls-bg-spin 4000ms linear infinite;
+}
+
+#ls-logo {
+  width: 60px;
+  height: 60px;
+}
