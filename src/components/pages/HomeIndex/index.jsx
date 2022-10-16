@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import OutletHeading2 from '../../atoms/OutletHeading2';
 import LoadingScreen from '../../molecules/LoadingScreen';
-import VideoCardList from "../VideoCardList";
+import VideoCardList from "../../organisms/VideoCardList";
+
+import outletInit from '../../../js/components/pages/outlet';
+import '../../../css/component/pages/home_index.css';
 
 class HomeIndexClass extends Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class HomeIndexClass extends Component {
   }
 
   async componentDidMount() {
+    outletInit('HomeIndex');
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
     const videos = await this.getVideoRecommendation('Tipes');

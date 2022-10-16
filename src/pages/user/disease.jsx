@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import outletInit from '../../js/components/pages/outlet';
-import DiseaseClass from '../../components/organisms/Disease';
-import '../../css/pages/user/disease.css';
+import DiseaseClass from '../../components/pages/Disease';
 
 export const loader = ({ params }) => {
   let disease = params.disease;
@@ -17,9 +16,9 @@ export const loader = ({ params }) => {
 }
 
 export const Disease = () => {
-  useEffect(() => {
-    outletInit('diseaseOutlet');
-  });
+  // useEffect(() => {
+  //   outletInit('diseaseOutlet');
+  // });
   const disease = useLoaderData();
   return (
     <DiseaseClass disease={disease} />

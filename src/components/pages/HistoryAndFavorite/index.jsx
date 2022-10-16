@@ -4,21 +4,26 @@ import OutletHeading1 from '../../atoms/OutletHeading1';
 import VideoCard2 from '../../molecules/VideoCard2';
 import LoadingScreen from '../../molecules/LoadingScreen';
 
+import outletInit from "../../../js/components/pages/outlet";
+
+import '../../../css/component/pages/history_and_favorite.css';
+
 class HistoryAndFavoriteClass extends Component {
   componentDidMount() {
+    outletInit('HnFContainer');
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
   }
 
   render() {
     return (
-      <>
+      <div id="HnFContainer">
         <OutletHeading1 text={this.props.heading} />
         <LoadingScreen />
         <VideoCard2 />
         <VideoCard2 />
         <VideoCard2 />
-      </>
+      </div>
     )
   }
 }

@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+
+import outletInit from '../../../js/components/pages/outlet';
+import '../../../css/component/pages/watch.css';
 
 export default class WatchClass extends Component {
   componentDidMount() {
+    outletInit('watch');
     this.props.onOutletChange();
   }
 

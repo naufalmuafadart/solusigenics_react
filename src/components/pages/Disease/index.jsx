@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { Form } from 'react-router-dom';
 
 import OutletHeading2 from "../../atoms/OutletHeading2";
-import VideoCardList from "../VideoCardList";
+import VideoCardList from "../../organisms/VideoCardList";
 import LoadingScreen from "../../molecules/LoadingScreen";
+
+import outletInit from "../../../js/components/pages/outlet";
+
+import '../../../css/component/pages/disease.css';
 
 export default class DiseaseClass extends Component {
   constructor(props) {
@@ -30,6 +34,7 @@ export default class DiseaseClass extends Component {
   }
 
   async componentDidMount() {
+    outletInit('diseaseOutlet');
     const videos = await this.getDiseaseVideos(this.props.disease);
     if (videos.length > 0) {
       const LoadingScreen = document.getElementById('loading-screen');

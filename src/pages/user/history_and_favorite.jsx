@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 
-import outletInit from '../../js/components/pages/outlet';
-import HistoryAndFavoriteClass from '../../components/organisms/HistoryAndFavorite';
-
-import "../../css/component/organisms/history_and_favorite.css";
+import HistoryAndFavoriteClass from '../../components/pages/HistoryAndFavorite';
 
 export function HistoryLoader() {
   let heading = 'History Tontonan';
@@ -17,18 +14,13 @@ export function FavoriteLoader() {
 }
 
 export function HistoryAndFavorite() {
-  useEffect(() => {
-    outletInit('HnFContainer');
-  });
   const { onAsideButtonClicked, onOutletChange } = useOutletContext();
   const { heading } = useLoaderData();
   return (
-    <div id="HnFContainer">
-      <HistoryAndFavoriteClass
-        heading={heading}
-        onAsideButtonClicked={onAsideButtonClicked}
-        onOutletChange={onOutletChange}
-        />
-    </div>
+    <HistoryAndFavoriteClass
+      heading={heading}
+      onAsideButtonClicked={onAsideButtonClicked}
+      onOutletChange={onOutletChange}
+      />
   );
 }

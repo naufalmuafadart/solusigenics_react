@@ -7,7 +7,7 @@ import init from '../../js/pages/user/home';
 
 import '../../css/font.css';
 import '../../css/app.css';
-import '../../css/pages/user/home.css';
+import '../../css/pages/home.css';
 
 export default class home extends Component {
   constructor(props) {
