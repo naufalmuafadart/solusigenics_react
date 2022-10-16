@@ -14,8 +14,6 @@ import {
 } from './pages/user/home_index';
 import {
   Disease,
-  tipesLoader,
-  ususBuntuLoader,
   loader as diseaseLoader
 } from './pages/user/disease';
 import {
@@ -61,16 +59,6 @@ const router = createBrowserRouter(
           element: <HistoryAndFavorite />,
           loader: FavoriteLoader,
         },
-        // {
-        //   path: '/tipes',
-        //   element: <Disease />,
-        //   loader: tipesLoader,
-        // },
-        // {
-        //   path: '/UsusBuntu',
-        //   element: <Disease />,
-        //   loader: ususBuntuLoader,
-        // },
         {
           path: '/:disease',
           element: <Disease />,

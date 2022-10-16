@@ -27,6 +27,12 @@ export default class home extends Component {
   }
 
   onAsideButtonClicked(order) {
+    if (window.innerWidth <= 800) {
+      const asideToggle = document.getElementById('asideToggle');
+      const aside = document.querySelector("#mainContent > aside");
+      asideToggle.value = 'hide';
+      aside.style.display = 'none';
+    }
     this.setState({
       selectedDiseaseOrder: order,
     });
@@ -53,7 +59,6 @@ export default class home extends Component {
       asideToggle.value = 'hide';
       aside.style.display = 'none';
     }
-    console.log('change');
   }
 
   render() {
