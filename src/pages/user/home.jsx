@@ -53,6 +53,7 @@ export default class home extends Component {
       asideToggle.value = 'hide';
       aside.style.display = 'none';
     }
+    console.log('change');
   }
 
   render() {
@@ -73,7 +74,7 @@ export default class home extends Component {
             />
         </div>
         <input
-          type="text"
+          type="hidden"
           defaultValue={window.innerWidth > 800 ? 'active' : 'hide'}
           style={{marginTop: '100px'}}
           id="asideToggle"

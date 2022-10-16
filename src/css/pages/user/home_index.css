@@ -6,12 +6,3 @@
   padding: 0px 10px;
   box-sizing: border-box;
 }
-
-figure img {
-  width: 100%
-}
-
-figure figcaption {
-  color: black;
-  font-weight: 600;
-}

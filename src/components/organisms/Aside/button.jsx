@@ -23,7 +23,7 @@ class Button extends Component {
       btnDisease: true,
     });
     return (
-      <Link to={`/${this.props.disease}`}>
+      <Link to={`/${this.props.disease.replace(" ", "")}`}>
         <button
           className={cn}
           onClick={this.onClick}

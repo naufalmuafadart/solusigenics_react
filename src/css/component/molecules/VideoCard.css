@@ -1,4 +1,44 @@
 a.video {
-  width: 70%;
-  align-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+figure {
+  width: 50%;
+}
+
+figure img {
+  width: 100%
+}
+
+figure figcaption {
+  width: 100%;
+  color: black;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 800px) {
+  figure {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  figure {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  figure {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  figure {
+    width: 95%;
+  }
 }
