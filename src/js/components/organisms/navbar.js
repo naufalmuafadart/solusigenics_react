@@ -1,14 +1,9 @@
 const init = (document) => {
   const navbar = document.getElementById("navbar");
   const dropdownMenu = document.getElementById("dropdown-menu");
-  const threeDots = document.getElementById("three-dots");
   const welcomeGreeting = document.getElementById("welcomeGreeting");
   const textVideoFavorite = document.getElementById('text-video-favorite');
   const icMenu = document.getElementById("ic-menu");
-
-  threeDots.addEventListener("mouseenter", () => {
-    dropdownMenu.style.display = "block";
-  });
   
   navbar.addEventListener("mouseleave", () => {
     dropdownMenu.style.display = "none";
