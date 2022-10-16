@@ -35,6 +35,8 @@ export default class DiseaseClass extends Component {
 
   async componentDidMount() {
     outletInit('diseaseOutlet');
+    this.props.onAsideButtonClicked(this.props.order);
+    this.props.onOutletChange();
     const videos = await this.getDiseaseVideos(this.props.disease);
     if (videos.length > 0) {
       const LoadingScreen = document.getElementById('loading-screen');
