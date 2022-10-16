@@ -8,10 +8,7 @@ import {
 import Login from './pages/login';
 import SignUp from './pages/signup';
 import Home from './pages/user/home';
-import {
-  HomeIndex ,
-  loader as recommendationLoader
-} from './pages/user/home_index';
+import { HomeIndex } from './pages/user/home_index';
 import {
   Disease,
   loader as diseaseLoader
@@ -42,8 +39,7 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <HomeIndex />,
-          loader: recommendationLoader,
+          element: <HomeIndex />
         },
         {
           path: '/history',
