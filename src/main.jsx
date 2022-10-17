@@ -5,8 +5,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Login from './pages/login';
-import SignUp from './pages/signup';
+import {action as loginAction, Login} from './pages/login';
+import {
+  action as signUpAction,
+  SignUp
+} from './pages/signup';
 import Home from './pages/user/home';
 import { HomeIndex } from './pages/user/home_index';
 import {
@@ -28,10 +31,12 @@ const router = createBrowserRouter(
     {
       path: "/login",
       element: <Login/>,
+      action: loginAction,
     },
     {
       path: "/signup",
       element: <SignUp/>,
+      action: signUpAction,
     },
     {
       path: "/",
