@@ -1,8 +1,7 @@
-import { setTitle, setFavicon } from "../common";
+import { setTitle } from "../common";
 
 const init = () => {
   setTitle(document, "Beranda");
-  setFavicon(document);
   const aside = document.querySelector("#mainContent > aside");
   const asideToggle = document.getElementById("asideToggle");
 

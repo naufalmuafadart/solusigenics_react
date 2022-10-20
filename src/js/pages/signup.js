@@ -1,8 +1,7 @@
-import { setTitle, setFavicon } from "./common";
+import { setTitle } from "./common";
 
 const init = (document) => {
   setTitle(document, "Daftar");
-  setFavicon(document);
 };
 
 export default init;
