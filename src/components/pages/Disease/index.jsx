@@ -34,7 +34,7 @@ export default class DiseaseClass extends Component {
   }
 
   async componentDidMount() {
-    outletInit('diseaseOutlet');
+    outletInit('diseaseOutlet', `Penyakit ${this.props.disease}`);
     this.props.onAsideButtonClicked(this.props.order);
     this.props.onOutletChange();
     const videos = await this.getDiseaseVideos(this.props.disease);
@@ -46,6 +46,7 @@ export default class DiseaseClass extends Component {
   }
 
   async componentDidUpdate() {
+    outletInit('diseaseOutlet', `Penyakit ${this.props.disease}`);
     const LoadingScreen = document.getElementById('loading-screen');
     LoadingScreen.style.display = 'grid';
     if (this.state.currentDisease !== this.props.disease) {

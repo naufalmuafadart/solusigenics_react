@@ -1,4 +1,6 @@
-const outletInit = (id) => {
+import { setTitle } from "../../common";
+
+const outletInit = (id, title) => {
   const element = document.getElementById(id);
   element.addEventListener('click', () => {
     if (window.innerWidth <= 800) {
@@ -8,6 +10,7 @@ const outletInit = (id) => {
       aside.style.display = 'none';
     }
   });
+  setTitle(document, title);
 }
 
 export default outletInit;

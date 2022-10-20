@@ -18,7 +18,7 @@ export default class WatchClass extends Component {
   }
 
   componentDidMount() {
-    outletInit('watch');
+    outletInit('watch', 'Judul Video');
     this.props.onOutletChange();
   }
 

@@ -11,12 +11,13 @@ import '../../../css/component/pages/history_and_favorite.css';
 
 class HistoryAndFavoriteClass extends Component {
   componentDidMount() {
-    outletInit('HnFContainer');
+    outletInit('HnFContainer', this.props.heading);
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
   }
 
   componentDidUpdate() {
+    outletInit('HnFContainer', this.props.heading);
     hideNavbar(document);
   }
 

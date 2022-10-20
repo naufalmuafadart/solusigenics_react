@@ -1,7 +1,4 @@
-import { setTitle } from "../../common";
-
 const init = () => {
-  setTitle(document, "Beranda");
   const aside = document.querySelector("#mainContent > aside");
   const asideToggle = document.getElementById("asideToggle");
 

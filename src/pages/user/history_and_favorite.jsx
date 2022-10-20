@@ -4,12 +4,12 @@ import { useLoaderData, useOutletContext } from 'react-router-dom';
 import HistoryAndFavoriteClass from '../../components/pages/HistoryAndFavorite';
 
 export function HistoryLoader() {
-  let heading = 'History Tontonan';
+  const heading = 'History Tontonan';
   return { heading };
 }
 
 export function FavoriteLoader() {
-  let heading = 'Video Favorit';
+  const heading = 'Video Favorit';
   return { heading };
 }
 

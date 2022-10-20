@@ -29,7 +29,7 @@ class HomeIndexClass extends Component {
   }
 
   async componentDidMount() {
-    outletInit('HomeIndex');
+    outletInit('HomeIndex', 'Beranda');
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
     const videos = await this.getVideoRecommendation('Tipes');
