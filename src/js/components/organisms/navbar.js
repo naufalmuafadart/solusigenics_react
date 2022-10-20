@@ -1,4 +1,4 @@
-const init = (document) => {
+export const init = (document) => {
   const navbar = document.getElementById("navbar");
   const dropdownMenu = document.getElementById("dropdown-menu");
   const welcomeGreeting = document.getElementById("welcomeGreeting");
@@ -42,4 +42,20 @@ const init = (document) => {
   });
 }
 
-export default init;
+export const hide = (document) => {
+  if (window.innerWidth <= 800) {
+    const asideToggle = document.getElementById('asideToggle');
+    const aside = document.querySelector("#mainContent > aside");
+    asideToggle.value = 'hide';
+    aside.style.display = 'none';
+  }
+}
+
+export const show = (document) => {
+  if (window.innerWidth <= 800) {
+    const asideToggle = document.getElementById('asideToggle');
+    const aside = document.querySelector("#mainContent > aside");
+    asideToggle.value = 'active';
+    aside.style.display = 'block';
+  }
+}

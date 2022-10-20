@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../../components/organisms/Navbar';
 import Aside from '../../components/organisms/Aside';
 import init from '../../js/pages/user/home';
+import { hide as hideNavbar, show as showNavbar } from '../../js/components/organisms/navbar';
 
 import '../../css/font.css';
 import '../../css/app.css';
@@ -27,38 +28,24 @@ export default class home extends Component {
   }
 
   onAsideButtonClicked(order) {
-    if (window.innerWidth <= 800) {
-      const asideToggle = document.getElementById('asideToggle');
-      const aside = document.querySelector("#mainContent > aside");
-      asideToggle.value = 'hide';
-      aside.style.display = 'none';
-    }
+    hideNavbar(document);
     this.setState({
       selectedDiseaseOrder: order,
     });
   }
 
   onAsideToggleClicked() {
-    if (window.innerWidth <= 800) {
-      const aside = document.querySelector("#mainContent > aside");
-      const asideToggle = document.getElementById("asideToggle");
-      asideToggle.value = asideToggle.value == 'active' ? 'hide' : 'active';
-      if (asideToggle.value === 'active') {
-        aside.style.display = 'block';
-      }
-      else {
-        aside.style.display = 'none';
-      }
+    const asideToggle = document.getElementById("asideToggle");
+    if (asideToggle.value === 'active') {
+      hideNavbar(document);
+    }
+    else {
+      showNavbar(document);
     }
   }
 
   onOutletChange() {
-    if (window.innerWidth <= 800) {
-      const asideToggle = document.getElementById('asideToggle');
-      const aside = document.querySelector("#mainContent > aside");
-      asideToggle.value = 'hide';
-      aside.style.display = 'none';
-    }
+    hideNavbar(document);
   }
 
   render() {

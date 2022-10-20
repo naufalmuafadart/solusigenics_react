@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import init from "../../../js/components/organisms/navbar";
+import { init } from "../../../js/components/organisms/navbar";
 
 import "../../../css/component/organisms/navbar.css";
 
