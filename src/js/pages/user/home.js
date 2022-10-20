@@ -1,4 +1,4 @@
-import { setTitle } from "../common";
+import { setTitle } from "../../common";
 
 const init = () => {
   setTitle(document, "Beranda");
