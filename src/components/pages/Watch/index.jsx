@@ -9,6 +9,8 @@ export default class WatchClass extends Component {
 
     this.state = {
       isLiked: false,
+      title: 'Title',
+      url: ''
     };
 
     this.ic_white_url = '/images/icon/heart_white.png';
@@ -17,9 +19,43 @@ export default class WatchClass extends Component {
     this.onIcHeartClicked = this.onIcHeartClicked.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     outletInit('watch', 'Judul Video');
     this.props.onOutletChange();
+
+    let url = window.location.href;
+    url = new URL(url);
+    const source = url.searchParams.get("source");
+    const videoId = url.searchParams.get("id");
+
+    const body = [{
+      id : videoId,
+      source,
+    }];
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    
+    const raw = JSON.stringify(body);
+    const requestOptions = {
+      method: 'POST',
+      headers: headers,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    let request = await fetch(`http://127.0.0.1:5000/get_play_url_by_id/${videoId}?source=${source}`);
+    let data = await request.text();
+    url = data;
+
+    request = await fetch(`http://127.0.0.1:5000/get_videos_detail`, requestOptions);
+    data = await request.text();
+    data = JSON.parse(data);
+    data = data['videos'][0];
+    this.setState({
+      url,
+      title: data.title
+    });
   }
 
   onIcHeartClicked() {
@@ -34,13 +70,13 @@ export default class WatchClass extends Component {
     return (
       <div id="watch">
         <iframe
-          src="https://www.youtube.com/embed/-xTIRoONRa8"
+          src={this.state.url}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen></iframe>
         <section id="titleSection">
-          <p>Webinar Seri COVID-19 Waspada Omicron, Kenali dan Kendalikan Penyakit Penyerta KOMORBID</p>
+          <p>{ this.state.title }</p>
           <img
             src={
               this.state.isLiked ? this.ic_red_url : this.ic_white_url

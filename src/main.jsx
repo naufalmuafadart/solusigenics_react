@@ -52,7 +52,7 @@ const router = createBrowserRouter(
           loader: HistoryLoader,
         },
         {
-          path: '/watch',
+          path: '/tonton',
           element: <Watch />,
         },
         {

@@ -5,7 +5,7 @@ export default class index extends Component {
   render() {
     return (
       <div className="card">
-        <Link to="/watch" className="left-side" style={{ textDecoration: "none" }}>
+        <Link to="/tonton" className="left-side" style={{ textDecoration: "none" }}>
           <img
             src="https://i.ytimg.com/vi/xyVfLxV08I0/maxresdefault.jpg"
             className="thumbnail"/>

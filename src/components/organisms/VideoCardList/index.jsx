@@ -12,8 +12,10 @@ export default function VideoCardList(props) {
           (video) => (
             <VideoCard
               key={video.id}
+              id={video.id}
               title={video.title}
               thumbnail={video.thumbnail}
+              source={video.source}
               />
           )
         )
