@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { init } from "../../../js/components/organisms/navbar";
 
 import "../../../css/component/organisms/navbar.css";
@@ -10,6 +10,7 @@ export default class Navbar extends Component {
 
     this.onMouseEnterThreeDots = this.onMouseEnterThreeDots.bind(this);
     this.onClickHistoryMenu = this.onClickHistoryMenu.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   onMouseEnterThreeDots() {
@@ -20,6 +21,16 @@ export default class Navbar extends Component {
   onClickHistoryMenu() {
     const dropdownMenu = document.getElementById("dropdown-menu");
     dropdownMenu.style.display = "none";
+  }
+
+  async onLogout(e) {
+    if (localStorage.getItem('refreshToken') !== null) {
+      e.preventDefault();
+    }
+
+    await this.props.onLogout();
+
+    document.getElementById('logoutLink').click();
   }
 
   render() {
@@ -55,8 +66,19 @@ export default class Navbar extends Component {
         <hr />
         <div id="dropdown-container">
           <aside id="dropdown-menu">
-            <Link to="/history" onClick={() => this.onClickHistoryMenu()}>History Tontonan</Link>
-            <Link to="/login">Logout</Link>
+            <Link
+              to="/history"
+              onClick={() => this.onClickHistoryMenu()}
+              >
+              History Tontonan
+            </Link>
+            <Link
+              id="logoutLink"
+              to="/login"
+              onClick={(e) => this.onLogout(e)}
+              >
+              Logout
+            </Link>
           </aside>
         </div>
       </nav>

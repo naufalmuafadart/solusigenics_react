@@ -7,14 +7,49 @@ import {
 import LoginSignUpAlert from '../components/molecules/LoginSignUpAlert';
 import '../css/pages/login.css';
 import init from '../js/pages/login';
+import { checkIsLoggedOut } from '../js/common';
 
-export async function action() {
-  return redirect('/');
+export async function action({ request }) {
+  const formData = await request.formData();
+  const usernameoremail = formData.get("usernameoremail");
+  const password = formData.get("password");
+
+  let myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  let raw = JSON.stringify({
+    usernameoremail,
+    password,
+  });
+
+  let requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  const response = await fetch('http://localhost:5001/authentications', requestOptions);
+  let data = await response.text();
+  data = JSON.parse(data);
+  if (response.status == 201) {
+    const { accessToken, refreshToken } = data.data;
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    return redirect('/');
+  }
+  else {
+    const alert = document.getElementById('LoginSignUpAlert');
+    alert.classList.add('danger');
+    alert.classList.add('show');
+    alert.innerHTML = `<p>${data.message}</p>`;
+  }
 }
 
 export function Login() {
   useEffect(() => {
     init(document);
+    checkIsLoggedOut();
     if(sessionStorage.getItem('loginAlertType') !== null) {
       const message = sessionStorage.getItem('loginAlertMessage');
       const loginAlertType = sessionStorage.getItem('loginAlertType');
@@ -22,8 +57,8 @@ export function Login() {
       alert.classList.add(loginAlertType);
       alert.classList.add('show');
       alert.innerHTML = `<p>${message}</p>`;
+      sessionStorage.clear();
     }
-    sessionStorage.clear();
   });
 
   return (
@@ -31,12 +66,25 @@ export function Login() {
       <div className="box">
         <Form method="post">
           <h1 className="billabong-font-family">Solusigenics</h1>
-          <LoginSignUpAlert message={'Username atau Email atau Password salah'} />
+          <LoginSignUpAlert message={''} />
           <div className="inputContainer">
-            <input type="text" placeholder="Username atau email" name="usernameoremail" required />
+            <input
+              type="text"
+              placeholder="Username atau email"
+              name="usernameoremail"
+              maxLength={100}
+              required
+              />
           </div>
           <div className="inputContainer">
-            <input type="password" placeholder="Password" name="password" required />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              minLength={8}
+              maxLength={40}
+              required
+              />
           </div>
           <div className="inputContainer">
             <input

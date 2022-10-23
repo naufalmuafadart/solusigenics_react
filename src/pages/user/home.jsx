@@ -5,6 +5,7 @@ import Navbar from '../../components/organisms/Navbar';
 import Aside from '../../components/organisms/Aside';
 import init from '../../js/pages/user/home';
 import { hide as hideNavbar, show as showNavbar } from '../../js/components/organisms/navbar';
+import { checkIsLoggedIn } from '../../js/common';
 
 import '../../css/font.css';
 import '../../css/app.css';
@@ -21,6 +22,8 @@ export default class home extends Component {
     this.onAsideButtonClicked = this.onAsideButtonClicked.bind(this);
     this.onAsideToggleClicked = this.onAsideToggleClicked.bind(this);
     this.onOutletChange = this.onOutletChange.bind(this);
+    this.onLogout = this.onLogout.bind(this);
+    checkIsLoggedIn();
   }
 
   componentDidMount() {
@@ -46,12 +49,36 @@ export default class home extends Component {
 
   onOutletChange() {
     hideNavbar(document);
+    checkIsLoggedIn();
+  }
+
+  async onLogout() {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({ refreshToken });
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    await fetch('http://localhost:5001/authentications', requestOptions);
+
+    localStorage.clear();
   }
 
   render() {
     return (
       <>
-        <Navbar onAsideToggleClicked={this.onAsideToggleClicked} />
+        <Navbar
+          onAsideToggleClicked={this.onAsideToggleClicked}
+          onLogout={this.onLogout}
+          />
         <div id="mainContent">
           <Aside
             selectedDiseaseOrder={this.state.selectedDiseaseOrder}

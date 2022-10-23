@@ -3,6 +3,7 @@ import { Link, Form, redirect } from "react-router-dom";
 import LoginSignUpAlert from '../components/molecules/LoginSignUpAlert';
 import '../css/pages/login.css';
 import init from '../js/pages/signup';
+import { checkIsLoggedOut } from '../js/common';
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -54,6 +55,7 @@ export async function action({ request }) {
 export function SignUp() {
   useEffect(() => {
     init(document);
+    checkIsLoggedOut();
   });
 
   return (

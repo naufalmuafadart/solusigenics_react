@@ -6,6 +6,7 @@ import LoadingScreen from '../../molecules/LoadingScreen';
 import { hide as hideNavbar } from '../../../js/components/organisms/navbar';
 
 import outletInit from "../../../js/components/pages/outlet";
+import { checkIsLoggedIn } from '../../../js/common';
 
 import '../../../css/component/pages/history_and_favorite.css';
 
@@ -19,6 +20,7 @@ class HistoryAndFavoriteClass extends Component {
   componentDidUpdate() {
     outletInit('HnFContainer', this.props.heading);
     hideNavbar(document);
+    checkIsLoggedIn();
   }
 
   render() {
