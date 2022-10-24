@@ -67,7 +67,7 @@ export default class home extends Component {
       redirect: 'follow'
     };
 
-    await fetch('http://localhost:5001/authentications', requestOptions);
+    await fetch(`${import.meta.env.VITE_HAPI_HOST}/authentications`, requestOptions);
 
     localStorage.clear();
   }

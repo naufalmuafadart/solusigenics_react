@@ -31,7 +31,7 @@ export async function action({ request }) {
     redirect: 'follow'
   };
 
-  const response = await fetch('http://localhost:5001/users', requestOptions);
+  const response = await fetch(`${import.meta.env.VITE_HAPI_HOST}/users`, requestOptions);
   let data = await response.text();
   data = JSON.parse(data);
   if (response.status == 201) {

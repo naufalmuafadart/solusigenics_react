@@ -44,11 +44,11 @@ export default class WatchClass extends Component {
       redirect: 'follow'
     };
 
-    let request = await fetch(`http://127.0.0.1:5000/get_play_url_by_id/${videoId}?source=${source}`);
+    let request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_play_url_by_id/${videoId}?source=${source}`);
     let data = await request.text();
     url = data;
 
-    request = await fetch(`http://127.0.0.1:5000/get_videos_detail`, requestOptions);
+    request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_videos_detail`, requestOptions);
     data = await request.text();
     data = JSON.parse(data);
     data = data['videos'][0];

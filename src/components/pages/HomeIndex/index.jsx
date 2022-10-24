@@ -17,7 +17,7 @@ class HomeIndexClass extends Component {
   }
 
   async getVideoRecommendation(disease) {
-    let response = await fetch(`http://127.0.0.1:5000/get_video_by_disease?query=${disease}`);
+    let response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_video_by_disease?query=${disease}`);
     if (response.status === 200) {
       let data = await response.text();
       data = JSON.parse(data);
