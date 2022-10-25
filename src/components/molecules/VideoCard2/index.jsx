@@ -7,9 +7,9 @@ export default class index extends Component {
       <div className="card">
         <Link to="/tonton" className="left-side" style={{ textDecoration: "none" }}>
           <img
-            src="https://i.ytimg.com/vi/xyVfLxV08I0/maxresdefault.jpg"
+            src={this.props.thumbnail}
             className="thumbnail"/>
-          <p>Video Favorit Video Favorit Video Favorit Video Favorit Video Favorit Video Favorit Video Favorit Video Favorit Video Favorit </p>
+          <p>{this.props.title}</p>
         </Link>
         <div className="right-side">
           <img

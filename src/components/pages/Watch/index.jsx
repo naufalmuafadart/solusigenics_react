@@ -27,26 +27,47 @@ export default class WatchClass extends Component {
     url = new URL(url);
     const source = url.searchParams.get("source");
     const videoId = url.searchParams.get("id");
+    const accessToken = localStorage.getItem('accessToken');
 
-    const body = [{
-      id : videoId,
+    let body = {
+      actual_id : videoId,
       source,
-    }];
+    };
 
-    const headers = new Headers();
+    let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    
-    const raw = JSON.stringify(body);
-    const requestOptions = {
+    headers.append("Authorization", `Bearer ${accessToken}`);
+
+    console.log(body);
+    let raw = JSON.stringify(body);
+    let requestOptions = {
       method: 'POST',
       headers: headers,
       body: raw,
       redirect: 'follow'
     };
 
-    let request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_play_url_by_id/${videoId}?source=${source}`);
+    let request = await fetch(`${import.meta.env.VITE_HAPI_HOST}/histories`, requestOptions);
+    
+    request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_play_url_by_id/${videoId}?source=${source}`);
     let data = await request.text();
     url = data;
+
+    body = [{
+      id : videoId,
+      source,
+    }];
+
+    headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    
+    raw = JSON.stringify(body);
+    requestOptions = {
+      method: 'POST',
+      headers: headers,
+      body: raw,
+      redirect: 'follow'
+    };
 
     request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_videos_detail`, requestOptions);
     data = await request.text();
