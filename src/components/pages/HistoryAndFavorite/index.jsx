@@ -6,7 +6,12 @@ import LoadingScreen from '../../molecules/LoadingScreen';
 import { hide as hideNavbar } from '../../../js/components/organisms/navbar';
 
 import outletInit from "../../../js/components/pages/outlet";
-import { checkIsLoggedIn } from '../../../js/common';
+import {
+  checkIsLoggedIn,
+  fetchRequestToHapi,
+  fetchRequestToFlask,
+  fetchRequestToHapiWithAuth
+} from '../../../js/common';
 
 import '../../../css/component/pages/history_and_favorite.css';
 
@@ -25,63 +30,31 @@ class HistoryAndFavoriteClass extends Component {
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
 
-    const accessToken = localStorage.getItem('accessToken');
+    const url = this.props.heading.includes('Hist') ? `/histories` : '';
+    let responseResult = await fetchRequestToHapiWithAuth(url, 'GET', null);
+    const histories = responseResult["data"];
+    const arr_video_id = histories.map((video) => video.video_id);
 
-    let myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
-    let requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-
-    const url = this.props.heading.includes('Hist') ? `${import.meta.env.VITE_HAPI_HOST}/histories` : '';
-    let response = await fetch(url, requestOptions);
-    let data = await response.text();
-    data = JSON.parse(data);
-    data = data["data"];
-    const arr_video_id = data.map((video) => video.video_id);
-
-    let raw = JSON.stringify({
+    let raw = {
       "video_ids": arr_video_id.map((video) => ({ id: video })),
-    });
-    
-    myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
     };
-    response = await fetch(`${import.meta.env.VITE_HAPI_HOST}/videos/get`, requestOptions);
-    let data_from_hapi = await response.text();
-    data_from_hapi = JSON.parse(data_from_hapi);
-    data_from_hapi = data_from_hapi["data"];
-    console.log({ data_from_hapi });
+  
+    responseResult = await fetchRequestToHapi('/videos/get', 'POST', raw);
+    let data_from_hapi = responseResult['data'];
 
-    raw = JSON.stringify(data_from_hapi.map(
+    raw = data_from_hapi.map(
       (video) => ({
         id: video.actual_id,
         source: video.source,
       }),
-    ));
+    );
 
-    requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_videos_detail`, requestOptions);
-    let data_from_flask = await response.text();
+    let data_from_flask = await fetchRequestToFlask('/get_videos_detail', 'POST', raw);
     data_from_flask = JSON.parse(data_from_flask);
-    console.log({ data_from_flask });
 
     this.setState({
       data_from_flask: data_from_flask["videos"],
+      histories: histories,
       data_from_hapi: data_from_hapi,
     });
   }

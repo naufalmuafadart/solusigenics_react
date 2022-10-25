@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { fetchRequestToHapiWithAuth, fetchRequestToFlask } from '../../../js/common';
+
 import outletInit from '../../../js/components/pages/outlet';
 import '../../../css/component/pages/watch.css';
 
@@ -47,32 +49,32 @@ export default class WatchClass extends Component {
       redirect: 'follow'
     };
 
-    let request = await fetch(`${import.meta.env.VITE_HAPI_HOST}/histories`, requestOptions);
-    
-    request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_play_url_by_id/${videoId}?source=${source}`);
-    let data = await request.text();
-    url = data;
+    await fetchRequestToHapiWithAuth('/histories', 'POST', body);
+
+    url = `/get_play_url_by_id/${videoId}?source=${source}`;
+    const response = await fetchRequestToFlask(url, 'GET', null);
+    url = response;
 
     body = [{
       id : videoId,
       source,
     }];
 
-    headers = new Headers();
-    headers.append("Content-Type", "application/json");
+    // headers = new Headers();
+    // headers.append("Content-Type", "application/json");
     
-    raw = JSON.stringify(body);
-    requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: raw,
-      redirect: 'follow'
-    };
+    // raw = JSON.stringify(body);
+    // requestOptions = {
+    //   method: 'POST',
+    //   headers: headers,
+    //   body: raw,
+    //   redirect: 'follow'
+    // };
 
-    request = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_videos_detail`, requestOptions);
-    data = await request.text();
-    data = JSON.parse(data);
+    let request = await fetchRequestToFlask('/get_videos_detail', 'POST', body);
+    let data = JSON.parse(request);
     data = data['videos'][0];
+    console.log(data);
     this.setState({
       url,
       title: data.title
