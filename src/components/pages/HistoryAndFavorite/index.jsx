@@ -21,8 +21,11 @@ class HistoryAndFavoriteClass extends Component {
 
     this.state = {
       data_from_flask: [],
+      histories: [],
       data_from_hapi: [],
     };
+
+    this.onDeleteHistory = this.onDeleteHistory.bind(this);
   }
 
   async componentDidMount() {
@@ -65,6 +68,16 @@ class HistoryAndFavoriteClass extends Component {
     checkIsLoggedIn();
   }
 
+  async onDeleteHistory(id) {
+    const video = this.state.data_from_hapi.find((video) => video.actual_id == id);
+    const payload = { video_id: video.id };
+    await fetchRequestToHapiWithAuth('/histories', 'DELETE', payload);
+    const arr = this.state.data_from_flask.filter((video) => video.id != id);
+    this.setState({
+      data_from_flask: arr,
+    });
+  }
+
   render() {
     return (
       <div id="HnFContainer">
@@ -77,8 +90,11 @@ class HistoryAndFavoriteClass extends Component {
             (video) => (
               <VideoCard2
                 key={video.id}
+                id={video.id}
+                source={video.source}
                 title={video.title}
                 thumbnail={video.thumbnail}
+                onDeleteHistory={this.onDeleteHistory}
                 />
             )
           )
