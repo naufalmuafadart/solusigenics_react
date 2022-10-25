@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-import { fetchRequestToHapiWithAuth, fetchRequestToFlask } from '../../../js/common';
+import { 
+  setTitle,
+  fetchRequestToHapiWithAuth,
+  fetchRequestToFlask
+} from '../../../js/common';
 
 import outletInit from '../../../js/components/pages/outlet';
 import '../../../css/component/pages/watch.css';
@@ -11,7 +15,7 @@ export default class WatchClass extends Component {
 
     this.state = {
       isLiked: false,
-      title: 'Title',
+      title: '',
       url: ''
     };
 
@@ -29,24 +33,10 @@ export default class WatchClass extends Component {
     url = new URL(url);
     const source = url.searchParams.get("source");
     const videoId = url.searchParams.get("id");
-    const accessToken = localStorage.getItem('accessToken');
 
     let body = {
       actual_id : videoId,
       source,
-    };
-
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Authorization", `Bearer ${accessToken}`);
-
-    console.log(body);
-    let raw = JSON.stringify(body);
-    let requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: raw,
-      redirect: 'follow'
     };
 
     await fetchRequestToHapiWithAuth('/histories', 'POST', body);
@@ -60,21 +50,10 @@ export default class WatchClass extends Component {
       source,
     }];
 
-    // headers = new Headers();
-    // headers.append("Content-Type", "application/json");
-    
-    // raw = JSON.stringify(body);
-    // requestOptions = {
-    //   method: 'POST',
-    //   headers: headers,
-    //   body: raw,
-    //   redirect: 'follow'
-    // };
-
     let request = await fetchRequestToFlask('/get_videos_detail', 'POST', body);
     let data = JSON.parse(request);
     data = data['videos'][0];
-    console.log(data);
+    setTitle(document, data.title);
     this.setState({
       url,
       title: data.title
