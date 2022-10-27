@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { 
   setTitle,
   fetchRequestToHapiWithAuth,
+  fetchRequestToHapi,
   fetchRequestToFlask
 } from '../../../js/common';
 
@@ -15,8 +16,11 @@ export default class WatchClass extends Component {
 
     this.state = {
       isLiked: false,
-      title: '',
-      url: ''
+      video_title: '',
+      video_url: '',
+      video_id: 0,
+      video_actual_id: '',
+      video_source: '',
     };
 
     this.ic_white_url = '/images/icon/heart_white.png';
@@ -39,11 +43,15 @@ export default class WatchClass extends Component {
       source,
     };
 
+    this.setState({ video_source: source });
+
     await fetchRequestToHapiWithAuth('/histories', 'POST', body);
 
     url = `/get_play_url_by_id/${videoId}?source=${source}`;
     const response = await fetchRequestToFlask(url, 'GET', null);
     url = response;
+
+    this.setState({ video_url: url });
 
     body = [{
       id : videoId,
@@ -53,32 +61,53 @@ export default class WatchClass extends Component {
     let request = await fetchRequestToFlask('/get_videos_detail', 'POST', body);
     let data = JSON.parse(request);
     data = data['videos'][0];
-    setTitle(document, data.title);
+
     this.setState({
-      url,
-      title: data.title
+      video_title: data.title,
+      video_actual_id: videoId,
     });
+
+    request = await fetchRequestToHapi(`/videos/get/${videoId}/${this.state.video_source}`, 'GET', null);
+    data = request;
+
+    setTitle(document, this.state.video_title);
+
+    this.setState({
+      video_id: data.data.id
+    });
+
+    request = await fetchRequestToHapiWithAuth(`/favorites/${this.state.video_id}`, 'GET', null);
+    data = request;
+    data = data.data;
+    
+    this.setState({ isLiked: data });
   }
 
-  onIcHeartClicked() {
-    this.setState(
-      (prevState) => {
-        return { isLiked: !prevState.isLiked }
-      }
-    );
+  async onIcHeartClicked() {
+    if (this.state.isLiked) {
+      await fetchRequestToHapiWithAuth(`/favorites/${this.state.video_id}`, 'DELETE', null);
+    }
+    else {
+      const body = { video_id: this.state.video_id };
+      await fetchRequestToHapiWithAuth('/favorites', 'POST', body);
+    }
+
+    const isLiked = await fetchRequestToHapiWithAuth(`/favorites/${this.state.video_id}`, 'GET');
+
+    this.setState({ isLiked: isLiked.data });
   }
 
   render() {
     return (
       <div id="watch">
         <iframe
-          src={this.state.url}
+          src={this.state.video_url}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen></iframe>
         <section id="titleSection">
-          <p>{ this.state.title }</p>
+          <p>{ this.state.video_title }</p>
           <img
             src={
               this.state.isLiked ? this.ic_red_url : this.ic_white_url
