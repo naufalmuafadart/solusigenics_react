@@ -37,3 +37,7 @@
 #HnFContainer .card img.ic-trash:hover {
   cursor: pointer;
 }
+
+#HnFContainer h2.alert {
+  text-align: center;
+}

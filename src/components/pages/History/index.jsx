@@ -23,6 +23,7 @@ class HistoryClass extends Component {
       data_from_flask: [],
       histories: [],
       data_from_hapi: [],
+      is_finish_mounted: false,
     };
 
     this.onDeleteVideo = this.onDeleteVideo.bind(this);
@@ -38,27 +39,37 @@ class HistoryClass extends Component {
     const histories = responseResult["data"];
     const arr_video_id = histories.map((video) => video.video_id);
 
-    let raw = {
-      "video_ids": arr_video_id.map((video) => ({ id: video })),
-    };
+    if (arr_video_id.length != 0) {
+      let raw = {
+        "video_ids": arr_video_id.map((video) => ({ id: video })),
+      };
+    
+      responseResult = await fetchRequestToHapi('/videos/get', 'POST', raw);
+      let data_from_hapi = responseResult['data'];
   
-    responseResult = await fetchRequestToHapi('/videos/get', 'POST', raw);
-    let data_from_hapi = responseResult['data'];
-
-    raw = data_from_hapi.map(
-      (video) => ({
-        id: video.actual_id,
-        source: video.source,
-      }),
-    );
-
-    let data_from_flask = await fetchRequestToFlask('/get_videos_detail', 'POST', raw);
-    data_from_flask = JSON.parse(data_from_flask);
-
+      raw = data_from_hapi.map(
+        (video) => ({
+          id: video.actual_id,
+          source: video.source,
+        }),
+      );
+  
+      let data_from_flask = await fetchRequestToFlask('/get_videos_detail', 'POST', raw);
+      data_from_flask = JSON.parse(data_from_flask);
+  
+      this.setState({
+        data_from_flask: data_from_flask["videos"],
+        histories: histories,
+        data_from_hapi: data_from_hapi,
+      });
+    }
+    else {
+      this.setState({
+        histories: histories,
+      });
+    }
     this.setState({
-      data_from_flask: data_from_flask["videos"],
-      histories: histories,
-      data_from_hapi: data_from_hapi,
+      is_finish_mounted: true,
     });
   }
 
@@ -83,7 +94,13 @@ class HistoryClass extends Component {
       <div id="HnFContainer">
         <OutletHeading1 text={this.props.heading} />
         {
-          this.state.data_from_flask.length > 0 ? null : <LoadingScreen />
+          (this.state.data_from_flask.length == 0 && !this.state.is_finish_mounted) ? <LoadingScreen /> : null
+        }
+        {
+          (this.state.is_finish_mounted && this.state.data_from_flask.length == 0) ?
+            <h2 className="alert">Tidak ada history tontonan</h2>
+          :
+            null
         }
         {
           this.state.data_from_flask.map(
