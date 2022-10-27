@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLoaderData, useOutletContext } from 'react-router-dom';
 
-import HistoryAndFavoriteClass from '../../components/pages/HistoryAndFavorite';
+import HistoryClass from '../../components/pages/History';
+import FavoriteClass from '../../components/pages/Favorite';
 
 export function HistoryLoader() {
   const heading = 'History Tontonan';
@@ -16,8 +17,17 @@ export function FavoriteLoader() {
 export function HistoryAndFavorite() {
   const { onAsideButtonClicked, onOutletChange } = useOutletContext();
   const { heading } = useLoaderData();
+  if (heading == 'History Tontonan') {
+    return (
+      <HistoryClass
+        heading={heading}
+        onAsideButtonClicked={onAsideButtonClicked}
+        onOutletChange={onOutletChange}
+        />
+    );
+  }
   return (
-    <HistoryAndFavoriteClass
+    <FavoriteClass
       heading={heading}
       onAsideButtonClicked={onAsideButtonClicked}
       onOutletChange={onOutletChange}

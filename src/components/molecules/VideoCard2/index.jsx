@@ -9,7 +9,7 @@ export default class index extends Component {
   }
 
   onDelete() {
-    this.props.onDeleteHistory(this.props.id);
+    this.props.onDeleteVideo(this.props.id);
   }
 
   render() {

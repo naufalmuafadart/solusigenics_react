@@ -15,7 +15,7 @@ import {
 
 import '../../../css/component/pages/history_and_favorite.css';
 
-class HistoryAndFavoriteClass extends Component {
+class HistoryClass extends Component {
   constructor(props) {
     super(props);
 
@@ -25,7 +25,7 @@ class HistoryAndFavoriteClass extends Component {
       data_from_hapi: [],
     };
 
-    this.onDeleteHistory = this.onDeleteHistory.bind(this);
+    this.onDeleteVideo = this.onDeleteVideo.bind(this);
   }
 
   async componentDidMount() {
@@ -33,7 +33,7 @@ class HistoryAndFavoriteClass extends Component {
     this.props.onAsideButtonClicked(0);
     this.props.onOutletChange();
 
-    const url = this.props.heading.includes('Hist') ? `/histories` : '';
+    const url = '/histories';
     let responseResult = await fetchRequestToHapiWithAuth(url, 'GET', null);
     const histories = responseResult["data"];
     const arr_video_id = histories.map((video) => video.video_id);
@@ -68,7 +68,7 @@ class HistoryAndFavoriteClass extends Component {
     checkIsLoggedIn();
   }
 
-  async onDeleteHistory(id) {
+  async onDeleteVideo(id) {
     const video = this.state.data_from_hapi.find((video) => video.actual_id == id);
     const payload = { video_id: video.id };
     await fetchRequestToHapiWithAuth('/histories', 'DELETE', payload);
@@ -94,7 +94,7 @@ class HistoryAndFavoriteClass extends Component {
                 source={video.source}
                 title={video.title}
                 thumbnail={video.thumbnail}
-                onDeleteHistory={this.onDeleteHistory}
+                onDeleteVideo={this.onDeleteVideo}
                 />
             )
           )
@@ -104,4 +104,4 @@ class HistoryAndFavoriteClass extends Component {
   }
 }
 
-export default HistoryAndFavoriteClass;
+export default HistoryClass;
