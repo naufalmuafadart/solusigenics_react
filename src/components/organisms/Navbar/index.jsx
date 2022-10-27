@@ -2,15 +2,39 @@ import React, { Component } from "react";
 import { Link, redirect } from "react-router-dom";
 import { init } from "../../../js/components/organisms/navbar";
 
+import { fetchRequestToHapiWithAuth } from '../../../js/common';
+
 import "../../../css/component/organisms/navbar.css";
 
 export default class Navbar extends Component {
-  componentDidMount() {
-    init(document);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+    };
 
     this.onMouseEnterThreeDots = this.onMouseEnterThreeDots.bind(this);
     this.onClickHistoryMenu = this.onClickHistoryMenu.bind(this);
     this.onLogout = this.onLogout.bind(this);
+    this.getUsername = this.getUsername.bind(this);
+  }
+
+  async componentDidMount() {
+    init(document);
+
+    await this.getUsername();
+
+    this.onMouseEnterThreeDots = this.onMouseEnterThreeDots.bind(this);
+    this.onClickHistoryMenu = this.onClickHistoryMenu.bind(this);
+    this.onLogout = this.onLogout.bind(this);
+  }
+
+  async getUsername() {
+    const response = await fetchRequestToHapiWithAuth('/users/username', 'GET', null);
+    this.setState({
+      username: response.data,
+    });
   }
 
   onMouseEnterThreeDots() {
@@ -54,7 +78,7 @@ export default class Navbar extends Component {
           <div className="right-side">
             <div className="group-wrapper">
               <img src="/images/navbar/user.png" alt="" />
-              <p id="welcomeGreeting">Welcome, user</p>
+              <p id="welcomeGreeting">Welcome, {this.state.username}</p>
             </div>
             <img
               src="/images/navbar/three_dots.png"

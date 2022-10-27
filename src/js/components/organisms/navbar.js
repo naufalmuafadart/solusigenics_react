@@ -9,11 +9,8 @@ export const init = (document) => {
     dropdownMenu.style.display = "none";
   });
 
-  welcomeGreeting.innerHTML = "Welcome, user";
-
   if (window.innerWidth < 650) {
     textVideoFavorite.innerHTML = 'Favorit';
-    welcomeGreeting.innerHTML = 'user';
   }
 
   if (window.innerWidth > 800) {
@@ -26,11 +23,9 @@ export const init = (document) => {
   window.addEventListener('resize', () => {
     if (window.innerWidth < 650) {
       textVideoFavorite.innerHTML = 'Favorit';
-      welcomeGreeting.innerHTML = 'user';
     }
     else {
       textVideoFavorite.innerHTML = 'Video Favorit';
-      welcomeGreeting.innerHTML = "Welcome, user";
     }
 
     if (window.innerWidth > 800) {
