@@ -27,6 +27,11 @@ class HomeIndexClass extends Component {
   async getVideoRecommendation() {
     let response = await fetchRequestToHapiWithAuth('/favorites', 'GET', null);
     let data = response.data;
+
+    if (data.length == 0) {
+      return [];
+    }
+
     const arr_video_id = data.map((video) => ({ id: video.video_id }));
 
     let body = {
