@@ -60,6 +60,12 @@ class HomeIndexClass extends Component {
         {
           (!this.state.is_finish_mounted) ? <LoadingScreen /> : null
         }
+        {
+          (this.state.is_finish_mounted && this.state.videos.length === 0) ? 
+            <h2 className="error">Anda belum memiliki rekomendasi video</h2>
+          :
+            null
+        }
         <VideoCardList videos={this.state.videos} />
       </div>
     );
