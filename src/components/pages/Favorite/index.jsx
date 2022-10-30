@@ -81,8 +81,7 @@ class FavoriteClass extends Component {
 
   async onDeleteVideo(id) {
     const video = this.state.data_from_hapi.find((video) => video.actual_id == id);
-    const payload = { video_id: video.id };
-    await fetchRequestToHapiWithAuth(`/favorites/${payload.video_id}`, 'DELETE', payload);
+    await fetchRequestToHapiWithAuth(`/favorites/${video.id}`, 'DELETE', null);
     const arr = this.state.data_from_flask.filter((video) => video.id != id);
     this.setState({
       data_from_flask: arr,
