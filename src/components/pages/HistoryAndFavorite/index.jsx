@@ -32,7 +32,7 @@ class HistoryAndFavoriteClass extends Component {
     this.onDeleteVideo = this.onDeleteVideo.bind(this);
     this.setDataFromHapi = this.setDataFromHapi.bind(this);
     this.setDataFromFlask = this.setDataFromFlask.bind(this);
-    this.setIsOnLaodVideo = this.setIsOnLaodVideo.bind(this);
+    this.setIsOnLoadVideo = this.setIsOnLoadVideo.bind(this);
     this.setStateHeading = this.setStateHeading.bind(this);
   }
 
@@ -66,7 +66,7 @@ class HistoryAndFavoriteClass extends Component {
     });
   }
 
-  setIsOnLaodVideo(is_on_load_video) {
+  setIsOnLoadVideo(is_on_load_video) {
     this.setState({ is_on_load_video });
   }
 
@@ -99,7 +99,7 @@ class HistoryAndFavoriteClass extends Component {
           date={this.state.date}
           setDataFromHapi={this.setDataFromHapi}
           setDataFromFlask={this.setDataFromFlask}
-          setIsOnLaodVideo={this.setIsOnLaodVideo}
+          setIsOnLoadVideo={this.setIsOnLoadVideo}
           setStateHeading={this.setStateHeading}
           is_first_time_load_video={this.state.is_first_time_load_video}
           data_from_flask={this.state.data_from_flask}

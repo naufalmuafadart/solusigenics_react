@@ -13,7 +13,7 @@ const VideoCardList2 = ( props ) => {
 		onDeleteVideo,
 		setDataFromHapi,
 		setDataFromFlask,
-		setIsOnLaodVideo,
+		setIsOnLoadVideo,
     setStateHeading,
     is_first_time_load_video,
     data_from_flask,
@@ -24,7 +24,7 @@ const VideoCardList2 = ( props ) => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			setIsOnLaodVideo(true);
+			setIsOnLoadVideo(true);
       setStateHeading();
       if (is_first_time_load_video || props_heading != state_heading) {
         let result = await fetchRequestToHapiWithAuth(url, 'GET', null);
@@ -63,7 +63,7 @@ const VideoCardList2 = ( props ) => {
       else {
         setVideos(data_from_flask);
       }
-			setIsOnLaodVideo(false);
+			setIsOnLoadVideo(false);
     };
 
     fetchData();
