@@ -1,12 +1,12 @@
-a.video {
+.video_card {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-figure {
-  width: 50%;
+.video_card a {
+  width: 75%;
 }
 
 figure img {
@@ -20,25 +20,25 @@ figure figcaption {
 }
 
 @media only screen and (max-width: 800px) {
-  figure {
+  .video_card a {
     width: 70%;
   }
 }
 
 @media only screen and (max-width: 700px) {
-  figure {
+  .video_card a {
     width: 80%;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  figure {
+  .video_card a {
     width: 90%;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  figure {
+  .video_card a {
     width: 95%;
   }
 }
