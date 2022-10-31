@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 
 import OutletHeading1 from '../../atoms/OutletHeading1';
 import LoadingScreen from '../../molecules/LoadingScreen';
@@ -24,6 +24,8 @@ class HistoryAndFavoriteClass extends Component {
       data_from_hapi: [],
       is_finish_mounted: false,
       is_on_load_video: false,
+      is_first_time_load_video: true,
+      heading: this.props.heading,
       date: +new Date(),
     };
 
@@ -31,6 +33,7 @@ class HistoryAndFavoriteClass extends Component {
     this.setDataFromHapi = this.setDataFromHapi.bind(this);
     this.setDataFromFlask = this.setDataFromFlask.bind(this);
     this.setIsOnLaodVideo = this.setIsOnLaodVideo.bind(this);
+    this.setStateHeading = this.setStateHeading.bind(this);
   }
 
   componentDidMount() {
@@ -51,12 +54,14 @@ class HistoryAndFavoriteClass extends Component {
 
   setDataFromHapi(data) {
     this.setState({
+      is_first_time_load_video: false,
       data_from_hapi: data,
     });
   }
 
   setDataFromFlask(data) {
     this.setState({
+      is_first_time_load_video: false,
       data_from_flask: data,
     });
   }
@@ -65,14 +70,19 @@ class HistoryAndFavoriteClass extends Component {
     this.setState({ is_on_load_video });
   }
 
+  setStateHeading() {
+    this.setState({ heading : this.props.heading, });
+  }
+
   async onDeleteVideo(id) {
-    console.log('test');
     const video = this.state.data_from_hapi.find((video) => video.actual_id == id);
     let url = this.props.heading.includes('History') ? '/histories' : '/favorites';
     url = `${url}/${video.id}`;
     await fetchRequestToHapiWithAuth(url, 'DELETE', null);
+    const arr = this.state.data_from_flask.filter((item) => item.id != video.actual_id);
     this.setState({
       date: +new Date(),
+      data_from_flask: arr,
     });
   }
 
@@ -90,6 +100,11 @@ class HistoryAndFavoriteClass extends Component {
           setDataFromHapi={this.setDataFromHapi}
           setDataFromFlask={this.setDataFromFlask}
           setIsOnLaodVideo={this.setIsOnLaodVideo}
+          setStateHeading={this.setStateHeading}
+          is_first_time_load_video={this.state.is_first_time_load_video}
+          data_from_flask={this.state.data_from_flask}
+          props_heading={this.props.heading}
+          state_heading={this.state.heading}
           />
       </div>
     )
