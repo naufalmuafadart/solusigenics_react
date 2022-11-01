@@ -112,5 +112,6 @@ export async function fetchRequestToFlask(url, method, data) {
 
   let response = await fetch(`${BASE_URL}${url}`, requestOptions);
   let responseBody = await response.text();
+  responseBody = JSON.parse(responseBody);
   return responseBody;
 }

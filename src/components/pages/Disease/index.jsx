@@ -57,21 +57,15 @@ export default class DiseaseClass extends Component {
 
   async getDiseaseVideos(disease) {
     this.setState({ on_load_video: true });
-    let response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_video_by_disease/${disease}`);
-    if (response.status === 200) {
-      let data = await response.text();
-      data = JSON.parse(data);
-      this.setState({
-        on_load_video: false,
-      });
-      return data["data"];
-    }
-    else {
-      this.setState({
-        on_load_video: false,
-      });
-      return [];
-    }
+    let response = await fetchRequestToFlask(
+      `/get_video_by_disease/${disease}`,
+      'GET',
+      null
+    );
+    this.setState({
+      on_load_video: false,
+    });
+    return response["data"];
   }
 
   async onInputChange(e) {
