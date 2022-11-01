@@ -48,11 +48,11 @@ export default class DiseaseClass extends Component {
   }
 
   async getDiseaseVideos(disease) {
-    let response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_video_by_disease?query=${disease}`);
+    let response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_video_by_disease/${disease}`);
     if (response.status === 200) {
       let data = await response.text();
       data = JSON.parse(data);
-      return data["videos"];
+      return data["data"];
     }
     else {
       return [];
