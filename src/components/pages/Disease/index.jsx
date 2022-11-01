@@ -6,6 +6,7 @@ import { fetchRequestToFlask } from '../../../js/common'
 import OutletHeading2 from "../../atoms/OutletHeading2";
 import VideoCardList from "../../organisms/VideoCardList";
 import LoadingScreen from "../../molecules/LoadingScreen";
+import PropsChangeDetector from "../../atoms/PropsChangeDetector";
 
 import outletInit from "../../../js/components/pages/outlet";
 
@@ -19,13 +20,16 @@ export default class DiseaseClass extends Component {
       videos: [],
       currentDisease: this.props.disease,
       keyword: '',
+      date: +new Date(),
       on_searching: false,
       finish_mounting: false,
+      on_load_video: false,
     };
 
     this.getDiseaseVideos = this.getDiseaseVideos.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onDiseaseChange = this.onDiseaseChange.bind(this);
   }
 
   async componentDidMount() {
@@ -41,20 +45,32 @@ export default class DiseaseClass extends Component {
 
   async componentDidUpdate() {
     outletInit('diseaseOutlet', `Penyakit ${this.props.disease}`);
-    if (this.state.currentDisease !== this.props.disease) {
-      const videos = await this.getDiseaseVideos(this.props.disease);
-      this.setState({ videos, currentDisease: this.props.disease });
-    }
+  }
+
+  async onDiseaseChange() {
+    this.setState({ videos: [] });
+    const videos = await this.getDiseaseVideos(this.props.disease);
+    this.setState({
+      videos,
+      currentDisease: this.props.disease,
+    });
   }
 
   async getDiseaseVideos(disease) {
+    this.setState({ on_load_video: true });
     let response = await fetch(`${import.meta.env.VITE_FLASK_HOST}/get_video_by_disease/${disease}`);
     if (response.status === 200) {
       let data = await response.text();
       data = JSON.parse(data);
+      this.setState({
+        on_load_video: false,
+      });
       return data["data"];
     }
     else {
+      this.setState({
+        on_load_video: false,
+      });
       return [];
     }
   }
@@ -97,12 +113,18 @@ export default class DiseaseClass extends Component {
         </Form>
         <OutletHeading2 text={`Video penyakit ${this.props.disease}`} />
         {
-          (!this.state.finish_mounting || this.state.on_searching) ?
+          (!this.state.finish_mounting || this.state.on_searching || this.state.on_load_video) ?
             <LoadingScreen />
           :
             null
         }
         <VideoCardList videos={this.state.videos} />
+        <PropsChangeDetector
+          props_item={this.props.disease}
+          state_item={this.state.currentDisease}
+          date={this.state.date}
+          onPropsChange={this.onDiseaseChange}
+          />
       </div>
     );
   }
