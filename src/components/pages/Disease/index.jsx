@@ -20,7 +20,6 @@ export default class DiseaseClass extends Component {
       videos: [],
       currentDisease: this.props.disease,
       keyword: '',
-      date: +new Date(),
       on_searching: false,
       finish_mounting: false,
       on_load_video: false,
@@ -122,7 +121,6 @@ export default class DiseaseClass extends Component {
         <PropsChangeDetector
           props_item={this.props.disease}
           state_item={this.state.currentDisease}
-          date={this.state.date}
           onPropsChange={this.onDiseaseChange}
           />
       </div>
