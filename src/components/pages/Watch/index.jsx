@@ -46,25 +46,19 @@ export default class WatchClass extends Component {
     this.setState({ video_source: source });
 
     await fetchRequestToHapiWithAuth('/histories', 'POST', body);
-
-    url = `/get_play_url_by_id/${videoId}?source=${source}`;
-    const response = await fetchRequestToFlask(url, 'GET', null);
-    url = response;
-
-    this.setState({ video_url: url });
-
+  
     body = [{
       id : videoId,
       source,
     }];
 
     let request = await fetchRequestToFlask('/get_videos_detail', 'POST', body);
-    let data = JSON.parse(request);
-    data = data['videos'][0];
+    let data = request['data'][0];
 
     this.setState({
       video_title: data.title,
       video_actual_id: videoId,
+      video_url: data.play_url
     });
 
     request = await fetchRequestToHapi(`/videos/get/${videoId}/${this.state.video_source}`, 'GET', null);
