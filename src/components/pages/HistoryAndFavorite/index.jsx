@@ -102,8 +102,8 @@ class HistoryAndFavoriteClass extends Component {
       );
       
       let data_from_flask = await fetchRequestToFlask('/get_videos_detail', 'POST', raw);
-      data_from_flask = JSON.parse(data_from_flask);
-      data_from_flask = data_from_flask.videos;
+      data_from_flask = data_from_flask.data;
+      console.log(data_from_flask);
       
       this.setState({ data_from_hapi, data_from_flask, });
     }
@@ -137,7 +137,7 @@ class HistoryAndFavoriteClass extends Component {
       <div id="HnFContainer">
         <OutletHeading1 text={this.props.heading} />
         {
-          (this.state.is_finish_mounted && this.state.data_from_flask.length == 0) ?
+          (this.state.is_finish_mounted && this.state.data_from_flask.length == 0 && !this.state.is_on_load_video) ?
             <h2 className="alert">{this.alertNoVideo}</h2>
           :
             null
